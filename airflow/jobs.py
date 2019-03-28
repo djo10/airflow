@@ -928,6 +928,8 @@ class SchedulerJob(BaseJob):
 
             # todo: run.dag is transient but needs to be set
             run.dag = dag
+            # todo: preferably the integrity check happens at dag collection time
+            run.verify_integrity(session=session)
             run.update_state(session=session)
             if run.state == State.RUNNING:
                 make_transient(run)
